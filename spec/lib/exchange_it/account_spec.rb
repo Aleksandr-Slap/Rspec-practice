@@ -21,7 +21,7 @@ RSpec.describe ExchangeIt::Account do
       expect(ann.balance).to eq(30)
     end
 
-    it 'does not allow to deposit negative sum' do
+    it 'does not allow to deposit negative sum', fast: true do
       expect { ann.deposit(-30) }.to raise_error(ExchangeIt::IncorrectSum, /must be positive/)
     end
 
@@ -33,7 +33,7 @@ RSpec.describe ExchangeIt::Account do
   context 'when performing money withdrawal' do
     before { john.deposit 100 }
 
-    specify '#transfer' do
+    specify '#transfer', :fast do
       expect(ann.balance).to eq(0)
 
       john.transfer ann, 30

@@ -1,14 +1,13 @@
 # frozen_string_literal: true
 
 RSpec.describe ExchangeIt::User do
-  let(:user) { described_class.new 'John', 'Doe' }
+  let(:user) { |ex| described_class.new(ex.metadata[:name] || 'John', ex.metadata[:surname] || 'Doe') }
 
   it 'returns name' do
     expect(user.name).to eq('John')
   end
 
-  it 'returns name as a string' do
-    user = described_class.new nil, 'Doe'
+  it 'returns name as a string', name: nil do
     expect(user.name).to be_an_instance_of(String)
   end
 
@@ -16,8 +15,7 @@ RSpec.describe ExchangeIt::User do
     expect(user.surname).to eq('Doe')
   end
 
-  it 'returns surname as a string' do
-    user = described_class.new 'John', nil
+  it 'returns surname as a string', surname: nil do
     expect(user.surname).to be_an_instance_of(String)
   end
 
