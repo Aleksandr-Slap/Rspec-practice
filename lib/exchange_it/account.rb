@@ -3,6 +3,7 @@
 module ExchangeIt
   class Account
     include ExchangeIt::Utils::Uid
+    include ExchangeIt::ApiOld::Converter
 
     attr_reader :uid, :balance
 
@@ -15,6 +16,13 @@ module ExchangeIt
       withdraw(amount)
       receiver.deposit(amount)
     end
+
+    def transfer_with_conversion(receiver, amount, in_currency, out_currency)
+      coverted_amount = convert(sum: amount, from: in_currency, to: out_currency)
+
+      withdraw(amount)
+      receiver.deposit(coverted_amount)
+    end  
 
     def withdraw(amount)
       raise ExchangeIt::IncorrectSum, 'Amount must be positive!' unless amount.positive?

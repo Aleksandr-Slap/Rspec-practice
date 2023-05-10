@@ -4,6 +4,8 @@ require 'forwardable'
 
 require_relative 'exchange_it/utils/uid'
 
+require_relative 'exchange_it/api_old/converter'
+
 require_relative 'exchange_it/errors'
 
 require_relative 'exchange_it/user'

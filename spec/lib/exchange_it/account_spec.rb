@@ -33,6 +33,18 @@ RSpec.describe ExchangeIt::Account do
   context 'when performing money withdrawal' do
     before { john.deposit 100 }
 
+    specify '#transfer_with_conversion' do
+      allow(john).to receive(:convert).
+      with(sum: 50, from: :usd, to: :eur).
+      and_return(40)
+      
+      john.transfer_with_conversion(ann, 50, :usd, :eur)
+
+      expect(john.balance).to eq(50)
+      expect(ann.balance). to eq(40)
+      expect(john).to have_received(:convert).once
+    end  
+
     specify '#transfer', :fast do
       expect(ann.balance).to eq(0)
 
